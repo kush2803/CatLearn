@@ -42,7 +42,9 @@ class MLNEB(object):
             See https://wiki.fysik.dtu.dk/ase/ase/neb.html.
             Manual: Trajectory file (in ASE format) or list of Atoms.
             Atoms trajectory or list of Atoms containing the images along the
-            path.
+            path. If specified without the initial end-point and/or final
+            end-point of the NEB pathway, they are automatically added during
+            the calculation. 
         neb_method: string
             NEB method as implemented in ASE. ('aseneb', 'improvedtangent'
             or 'eb').
@@ -915,10 +917,10 @@ def eval_and_append(self, interesting_point):
 
     self.list_train = np.append(self.list_train,
                                 interesting_point, axis=0)
-    
-    # Remove old calculation information 
+
+    # Remove old calculation information
     self.ase_calc.results = {}
-    
+
     energy = get_energy_catlearn(self)
 
     self.list_targets = np.append(self.list_targets, energy)
